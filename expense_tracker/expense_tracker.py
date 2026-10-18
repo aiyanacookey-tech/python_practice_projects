@@ -1,3 +1,5 @@
+import math 
+
 expenses = [] # represents a list, whereas expense ={} represents a dictionary. A list can hold multiple items, while a dictionary holds key-value pairs.
 
 def calculate_total(expenses):
@@ -5,7 +7,19 @@ def calculate_total(expenses):
 
     for expense in expenses:
         total += expense['amount']      
-        return total
+    return total
+    
+def get_valid_amount():
+    while True:
+        try:
+            expense_amount = float(input("Enter expense amount: "))
+
+            if expense_amount <= 0 or not math.isfinite(expense_amount):
+                print("Amount must be a positive number. Please try again")
+            else:
+                return expense_amount
+        except ValueError: 
+            print("Invalid input. Please enter a valid number.")    
 
 while True: # creates a loop that runs continuously until something explicitly stops it, usually break
     print("\n1. Add Expense")
@@ -17,18 +31,7 @@ while True: # creates a loop that runs continuously until something explicitly s
 
     if choice == '1':
         expense_name = input("Enter expense name: ")
-
-        while True:
-            try:
-                expense_amount = float(input("Enter expense amount: "))
-
-                if expense_amount <= 0:
-                    print("Amount must be a positive number. Please try again")
-                else:
-                    break
-            except ValueError: 
-                print("Invalid input. Please enter a valid number.")
-            
+        expense_amount = get_valid_amount()
         expense = {
             'name': expense_name,
             'amount': expense_amount
